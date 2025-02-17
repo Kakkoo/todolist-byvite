@@ -4,7 +4,7 @@ import TodoListItem from "./TodoListItem"
 export default function TodoList({ completedTodos, incompletedTodos, onDeletedClicked, onCompletedClicked, onCreatedClicked }){
 return (
     <div>
-        <h1>My Todos</h1>
+        <h1>My Shopping List</h1>
           <NewTodoForm onCreatedClicked={onCreatedClicked}/>
         <h3>Completed:</h3>
         {completedTodos.map((todo, index) => (
