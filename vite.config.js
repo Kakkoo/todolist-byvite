@@ -1,13 +1,32 @@
+// <reference types="vitest/config" />
+
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: process.env.PORT || 5173,
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/setupTests.ts'],
   },
+  "compilerOptions": {
+    "types": ["vitest/globals", "@testing-library/jest-dom"]
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000/',
+        changeOrigin: true,
+      }
+    }
+  }
 })
+
+
+
+
 // to deploy to azure app service, we need to give this in Startup command
 //   pm2 serve /home/site/wwwroot/dist --no-daemon --spa
 //create a new app-service on Azure
