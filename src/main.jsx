@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
@@ -13,7 +13,6 @@ const store = configureStore({
     loading: loadingSlice.reducer,
   },
 });
-
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
@@ -22,3 +21,12 @@ createRoot(document.getElementById('root')).render(
     </Provider>  
   </StrictMode>,
 )
+
+// createRoot(document.getElementById('root')).render(
+//   <StrictMode>
+//     <Provider store={store}>
+//       <div>Vite + React </div>
+//     <App />
+//     </Provider>  
+//   </StrictMode>,
+// )
