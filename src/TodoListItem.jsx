@@ -1,3 +1,4 @@
+import React from 'react';
 import { useDispatch } from "react-redux";
 import { deleteTodo, markTodoAsCompleted } from "./thunks";
 import styled from 'styled-components';

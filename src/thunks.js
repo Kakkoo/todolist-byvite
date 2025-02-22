@@ -9,9 +9,10 @@ import {
 } from './todosSlice';
 
 export const loadTodos = () => async (dispatch) => {
+  const backendHostname = process.env.REACT_APP_BACKEND_HOSTNAME
   dispatch(loadingStarted());
   try {
-    const response = await axios.get('/api/todos');
+    const response = await axios.get(`${backendHostname}/api/todos`);
     const todos = response.data;
     console.log(todos);
     dispatch(loadingCompleted(todos));
@@ -22,7 +23,7 @@ export const loadTodos = () => async (dispatch) => {
 
 export const createTodo = (newTodoText) => async (dispatch, getState) => {
   try {
-    const response = await axios.post('/api/todos', { text: newTodoText });
+    const response = await axios.post(`${backendHostname}/api/todos`, { text: newTodoText });
     const newTodo = response.data;
     const updatedTodos = getState().todos.value.concat(newTodo);
     dispatch(todosUpdated(updatedTodos));
@@ -33,7 +34,7 @@ export const createTodo = (newTodoText) => async (dispatch, getState) => {
 
 export const deleteTodo = (todoId) => async (dispatch, getState) => {
   try {
-    await axios.delete('/api/todos/' + todoId);
+    await axios.delete(`${backendHostname}/api/todos/` + todoId);
     const updatedTodos = getState().todos.value.filter(t => t.id !== todoId);
     dispatch(todosUpdated(updatedTodos));
   } catch (e) {
@@ -43,7 +44,7 @@ export const deleteTodo = (todoId) => async (dispatch, getState) => {
 
 export const markTodoAsCompleted = (todoId) => async (dispatch, getState) => {
   try {
-    const response = await axios.put('/api/todos/' + todoId, { isCompleted: true });
+    const response = await axios.put(`${backendHostname}/api/todos/` + todoId, { isCompleted: true });
     const updatedTodo = response.data;
     const updatedTodos = getState().todos.value.map(t => t.id === todoId ? updatedTodo : t);
     dispatch(todosUpdated(updatedTodos));
