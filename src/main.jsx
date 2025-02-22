@@ -7,6 +7,7 @@ import { loadingSlice } from './loadingSlice.js'
 import './index.css'
 import App from './App.jsx'
 
+
 const store = configureStore({
   reducer: {
     todos: todosSlice.reducer,

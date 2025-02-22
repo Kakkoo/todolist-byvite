@@ -9,7 +9,7 @@ import {
 } from './todosSlice';
 
 export const loadTodos = () => async (dispatch) => {
-  const backendHostname = process.env.REACT_APP_BACKEND_HOSTNAME
+  const backendHostname = import.meta.env.VITE_BACKEND_HOSTNAME;
   dispatch(loadingStarted());
   try {
     const response = await axios.get(`${backendHostname}/api/todos`);
@@ -23,6 +23,7 @@ export const loadTodos = () => async (dispatch) => {
 
 export const createTodo = (newTodoText) => async (dispatch, getState) => {
   try {
+    const backendHostname = import.meta.env.VITE_BACKEND_HOSTNAME;
     const response = await axios.post(`${backendHostname}/api/todos`, { text: newTodoText });
     const newTodo = response.data;
     const updatedTodos = getState().todos.value.concat(newTodo);
@@ -34,6 +35,7 @@ export const createTodo = (newTodoText) => async (dispatch, getState) => {
 
 export const deleteTodo = (todoId) => async (dispatch, getState) => {
   try {
+    const backendHostname = import.meta.env.VITE_BACKEND_HOSTNAME;
     await axios.delete(`${backendHostname}/api/todos/` + todoId);
     const updatedTodos = getState().todos.value.filter(t => t.id !== todoId);
     dispatch(todosUpdated(updatedTodos));
@@ -44,6 +46,7 @@ export const deleteTodo = (todoId) => async (dispatch, getState) => {
 
 export const markTodoAsCompleted = (todoId) => async (dispatch, getState) => {
   try {
+    const backendHostname = import.meta.env.VITE_BACKEND_HOSTNAME;
     const response = await axios.put(`${backendHostname}/api/todos/` + todoId, { isCompleted: true });
     const updatedTodo = response.data;
     const updatedTodos = getState().todos.value.map(t => t.id === todoId ? updatedTodo : t);
